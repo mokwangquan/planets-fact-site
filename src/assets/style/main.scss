@@ -19,7 +19,6 @@
 
 
 body {
-  height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -27,7 +26,6 @@ body {
   font-size: 14px;
   line-height: 25px;
   color: #FFFFFF;
-  background-color: #070724;
 }
 
 body::-webkit-scrollbar { display: none } // hide scrollbar
@@ -41,7 +39,9 @@ html {
 }
 
 #app { 
-  height: fit-content;
+  height: 100vh;
+  background-color: #070724;
+  overflow: hidden;
 }
 
 *,

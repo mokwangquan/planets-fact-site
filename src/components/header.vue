@@ -53,10 +53,13 @@ export default {
 }
 </script>
 
-
-
 <style lang="scss">
+// @import "@/assets/style/_variables.scss";
+
 #header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   >div {
     padding: 1rem 2rem;

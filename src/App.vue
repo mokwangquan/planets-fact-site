@@ -5,17 +5,22 @@
       :selectedItem="selected"
       @on-select="value => selected = value"
     />
+    <Content
+      :selectedItem="selected"
+    />
   </div>
 </template>
 
 <script>
-import Header from "@/components/header/index.vue"
+import Header from "@/components/header.vue"
+import Content from "@/components/content.vue"
 // import { PLANETS } from "@/constants/index.js"
 
 export default {
   name: "App",
   components: {
-    Header
+    Header,
+    Content
   },
   data() {
     return {
@@ -34,7 +39,6 @@ export default {
 <style lang="scss">
 // import third party first
 @import "https://unpkg.com/element-ui/lib/theme-chalk/index.css";
-@import "@/assets/style/element-variables.scss";
 
 // Then only import local, to allow overriding
 @import "@/assets/style/main.scss";
