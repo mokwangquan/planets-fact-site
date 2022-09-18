@@ -1,26 +1,32 @@
 
 <template>
   <div id="app">
-    <Header />
+    <Header
+      :selectedItem="selected"
+      @on-select="value => selected = value"
+    />
   </div>
 </template>
 
 <script>
 import Header from "@/components/header/index.vue"
+// import { PLANETS } from "@/constants/index.js"
 
 export default {
   name: "App",
   components: {
     Header
   },
+  data() {
+    return {
+      selected: "mercury",
+    }
+  },
   computed: {
-    
   },
   mounted() {
-    
   },
   methods: {
-    
   },
 };
 </script>
