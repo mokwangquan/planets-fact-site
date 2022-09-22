@@ -1,7 +1,7 @@
 <template>
   <div id="content">
-    <el-row :type="isTablet ? '' : 'flex'" justify="center" align="start">
-      <el-col :span="isTablet ? 24 : 14">
+    <el-row :type="isTablet || isMobile ? '' : 'flex'" justify="center" align="start">
+      <el-col :span="isTablet || isMobile ? 24 : 14">
         <div class="img-wrapper">
           <el-image 
             class="planet-img"
@@ -18,9 +18,9 @@
           />
         </div>
       </el-col>
-      <el-col :span="isTablet ? 24 : 8">
-        <el-row class="content-wrapper" :type="isTablet ? 'flex' : ''" justify="space-between" align="middle">
-          <el-col :span="isTablet ? 12 : 24">
+      <el-col :span="isTablet || isMobile ? 24 : 8">
+        <el-row class="content-wrapper" :type="isTablet || isMobile ? 'flex' : ''" justify="space-between" align="middle">
+          <el-col :span="isTablet || isMobile ? 12 : 24">
             <h1>{{ planet.label }}</h1>
             <br/>
             <p>{{ content }}</p>
@@ -33,7 +33,7 @@
           </el-col>
           
 
-          <el-col class="button-wrapper" :span="isTablet ? 10 : 24">
+          <el-col class="button-wrapper" :span="isTablet || isMobile ? 10 : 24">
             <el-button 
               :style="`background-color: ${ selectedContent === 'overview' ? planet.color : '' }`"
               @click="selectedContent = 'overview'"
@@ -211,7 +211,8 @@ export default {
   }
 }
 
-.tablet #content {
+.tablet #content,
+.mobile #content {
   .content-wrapper {
     margin: auto 2rem;
   }

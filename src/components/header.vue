@@ -2,14 +2,14 @@
   <div id="header">
     <div>
       <el-row 
-        :type="isTablet ? '' : 'flex'" 
+        :type="isTablet && !isMobile ? '' : 'flex'" 
         justify="space-around" 
         align="middle"
       >
         <el-col>
           <h2 class="header-title">THE PLANETS</h2>
         </el-col>
-        <el-col>
+        <el-col v-if="!isMobile">
           <el-row 
             class="menu" 
             type="flex" 
@@ -27,8 +27,35 @@
             </el-col>
           </el-row>
         </el-col>
+        <el-col v-else :span="2">
+          <i class="hamburger" @click="menuOpen = !menuOpen"/>
+        </el-col>
       </el-row>
     </div>
+
+    <el-dialog
+      :visible.sync="menuOpen"
+      fullscreen
+      append-to-body
+      :modal="false"
+    >
+      <el-row 
+        type="flex" 
+        justify="space-between" 
+        align="middle"
+        v-for="el in PLANETS"
+        :key="el.value"
+        @click.native="onSelect(el.value); menuOpen = false"
+      >
+        <div class="sphere" :style="`background-color: ${el.color}`">&nbsp;</div>
+        <el-col :span="24">
+          <h3 class="name">{{ el.label }}</h3>
+        </el-col>
+        <el-col :span="1">
+          <i class="right-arrow"/>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
@@ -44,7 +71,8 @@ export default {
   },
   data() {
     return {
-      PLANETS
+      PLANETS,
+      menuOpen: false,
     }
   },
   methods: {
@@ -56,13 +84,14 @@ export default {
 </script>
 
 <style lang="scss">
-// @import "@/assets/style/_variables.scss";
 
 #header {
   position: sticky;
   top: 0;
   z-index: 2;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #070724;
+  background-image: url('../assets/svgs/background-stars.svg');
   >div {
     padding: 1rem 2rem;
   }
@@ -102,6 +131,61 @@ export default {
     >.el-col {
       .selected-line {
         top: 15px;
+      }
+    }
+  }
+}
+
+.mobile #header {
+  >div {
+    padding: 0.5rem 1rem;
+    z-index: 1;
+  }
+  .hamburger {
+    background-image: url('../assets/svgs/icon-hamburger.svg');
+    height: 30px;
+    width: 30px;
+    background-size: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-top: 10px;
+  }
+}
+
+.el-dialog__wrapper {
+  padding: 0;
+  top: auto !important;
+  height: 91%;
+  width: 100vw;
+  .el-dialog {
+    background-color: #070724;
+    background-image: url('../assets/svgs/background-stars.svg');
+    .el-dialog__header {
+      display: none;
+    }
+    .el-dialog__body {
+      padding: 1rem;
+      .el-row {
+        padding: 1rem;
+        .sphere {
+          width: 28px;
+          height: 24px;
+          border-radius: 50%;
+          margin-right: 1rem;
+        }
+        .name {
+          color: white;
+        }
+        .right-arrow {
+          background-image: url('../assets/svgs/icon-chevron.svg');
+          height: 10px;
+          width: 10px;
+          background-size: 10px;
+          background-position: center;
+          background-repeat: no-repeat;
+          display: inline-block;
+        }
       }
     }
   }

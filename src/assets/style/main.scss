@@ -26,6 +26,10 @@ body {
   font-size: 14px;
   line-height: 25px;
   color: #FFFFFF;
+  background-color: #070724;
+  background-image: url('./assets/svgs/background-stars.svg');
+  height: 100%;
+  width: 100%
 }
 
 body::-webkit-scrollbar { display: none } // hide scrollbar
@@ -40,9 +44,6 @@ html {
 
 #app { 
   height: 100vh;
-  background-color: #070724;
-  overflow: hidden;
-  background-image: url('./assets/svgs/background-stars.svg');
 }
 
 *,
