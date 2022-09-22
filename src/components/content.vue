@@ -1,7 +1,7 @@
 <template>
   <div id="content">
-    <el-row type="flex" justify="center" align="start">
-      <el-col :span="14">
+    <el-row :type="isTablet ? '' : 'flex'" justify="center" align="start">
+      <el-col :span="isTablet ? 24 : 14">
         <div class="img-wrapper">
           <el-image 
             class="planet-img"
@@ -18,20 +18,22 @@
           />
         </div>
       </el-col>
-      <el-col :span="8">
-        <div class="content-wrapper">
-          <h1>{{ planet.label }}</h1>
-          <br/>
-          <p>{{ content }}</p>
-          <div class="source">
-            Source : 
-            <a :href="planet.sourceUrl" target="_blank">
-              {{ planet.source }}<i class="go-to-icon"/>
-            </a>
-          </div>
+      <el-col :span="isTablet ? 24 : 8">
+        <el-row class="content-wrapper" :type="isTablet ? 'flex' : ''" justify="space-between" align="middle">
+          <el-col :span="isTablet ? 12 : 24">
+            <h1>{{ planet.label }}</h1>
+            <br/>
+            <p>{{ content }}</p>
+            <div class="source">
+              Source : 
+              <a :href="planet.sourceUrl" target="_blank">
+                {{ planet.source }}<i class="go-to-icon"/>
+              </a>
+            </div>
+          </el-col>
           
 
-          <div class="button-wrapper">
+          <el-col class="button-wrapper" :span="isTablet ? 10 : 24">
             <el-button 
               :style="`background-color: ${ selectedContent === 'overview' ? planet.color : '' }`"
               @click="selectedContent = 'overview'"
@@ -52,9 +54,9 @@
             >
               <span class="number">03</span> <h4>SURFACE GEOLOGY</h4>
             </el-button>
-          </div>
+          </el-col>
           
-        </div>
+        </el-row>
       </el-col>
     </el-row>
     <el-row class="numeric-facts-row" type="flex" justify="center" align="start">
@@ -93,6 +95,8 @@ export default {
   name: "Content",
   props: {
     selectedItem: { type: String, required: true },
+    isMobile: { type: Boolean, required: true },
+    isTablet: { type: Boolean, required: true },
   },
   data() {
     return {
@@ -133,11 +137,12 @@ export default {
     height: fit-content;
   }
   .content-wrapper {
-    margin-right: 15rem;
+    margin-right: 10vw;
   }
-  .img-wrapper {
+  .img-wrapper,
+  .planet-img {
     height: 100%;
-    max-height: 35rem;
+    max-height: 38rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -202,6 +207,32 @@ export default {
       .title {
         color: #838391;
       }
+    }
+  }
+}
+
+.tablet #content {
+  .content-wrapper {
+    margin: auto 2rem;
+  }
+  .img-wrapper {
+    height: 25rem;
+    margin-bottom: 4rem;
+    img {
+      width: 100%;
+      max-height: 15rem;
+    }
+  }
+  .numeric-facts-row {
+    margin: 1rem;
+    .title {
+      font-size: 10px;
+      line-height: 20px;
+    }
+    .answer {
+      font-size: 20px;
+      line-height: 26px;
+      letter-spacing: 0px;
     }
   }
 }

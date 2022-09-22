@@ -4,9 +4,13 @@
     <Header
       :selectedItem="selected"
       @on-select="value => selected = value"
+      :isMobile="isMobile"
+      :isTablet="isTablet"
     />
     <Content
       :selectedItem="selected"
+      :isMobile="isMobile"
+      :isTablet="isTablet"
     />
   </div>
 </template>
@@ -29,6 +33,8 @@ export default {
   data() {
     return {
       selected: "mercury",
+      isMobile: false,
+      isTablet: false,
     }
   },
   computed: {
@@ -45,15 +51,15 @@ export default {
   methods: {
     checkIsMobile() {
       const width = document.body.clientWidth
-      const isMobile = width < MOBILE_MAX_WIDTH
-      const isTablet = width < TABLET_MAX_WIDTH
+      this.isMobile = width < MOBILE_MAX_WIDTH
+      this.isTablet = width < TABLET_MAX_WIDTH
 
       document.body.classList.remove('mobile');
       document.body.classList.remove('tablet');
 
-      if (isMobile) {
+      if (this.isMobile) {
         document.body.classList.add('mobile');
-      } else if (isTablet) {
+      } else if (this.isTablet) {
         document.body.classList.add('tablet');
       }
     },

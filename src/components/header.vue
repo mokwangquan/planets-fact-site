@@ -2,12 +2,12 @@
   <div id="header">
     <div>
       <el-row 
-        type="flex" 
+        :type="isTablet ? '' : 'flex'" 
         justify="space-around" 
         align="middle"
       >
         <el-col>
-          <h2>THE PLANETS</h2>
+          <h2 class="header-title">THE PLANETS</h2>
         </el-col>
         <el-col>
           <el-row 
@@ -39,6 +39,8 @@ export default {
   name: "Header",
   props: {
     selectedItem: { type: String, required: true },
+    isMobile: { type: Boolean, required: true },
+    isTablet: { type: Boolean, required: true },
   },
   data() {
     return {
@@ -87,6 +89,19 @@ export default {
         .selected-line {
           border-top: 3px solid;
         }
+      }
+    }
+  }
+}
+
+.tablet #header {
+  .header-title {
+    text-align: center;
+  }
+  .menu {
+    >.el-col {
+      .selected-line {
+        top: 15px;
       }
     }
   }
