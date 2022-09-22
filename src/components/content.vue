@@ -9,14 +9,14 @@
             :alt="planet.value+' image'"
             fit="contain"
           />
+          <el-image
+            class="planet-geology-img"
+            v-if="selectedContent === 'surfaceGeology'"
+            :src="planetGeoUrl" 
+            :alt="planet.value+' image_geology'"
+            fit="contain"
+          />
         </div>
-        <el-image
-          class="planet-geology-img"
-          v-if="selectedContent === 'surfaceGeology'"
-          :src="planetGeoUrl" 
-          :alt="planet.value+' image_geology'"
-          fit="contain"
-        />
       </el-col>
       <el-col :span="8">
         <div class="content-wrapper">
@@ -141,12 +141,13 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
   }
   .planet-geology-img {
     position: absolute;
-    top: 363px;
-    left: 462px;
-    height: 160px;
+    top: 65%;
+    left: calc(50% - 65px);
+    width: 130px;
   }
   a {
     color: #838391;
