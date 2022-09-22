@@ -14,7 +14,11 @@
 <script>
 import Header from "@/components/header.vue"
 import Content from "@/components/content.vue"
+import debounce from "lodash/debounce"
 // import { PLANETS } from "@/constants/index.js"
+
+const TABLET_MAX_WIDTH = 1200
+const MOBILE_MAX_WIDTH = 500
 
 export default {
   name: "App",
@@ -30,8 +34,29 @@ export default {
   computed: {
   },
   mounted() {
+    // Mobile view checking
+    this.checkIsMobile() // initial checking
+
+    // check isMobile again when resized
+    window.addEventListener('resize', 
+      debounce(this.checkIsMobile, 100)
+    , true);
   },
   methods: {
+    checkIsMobile() {
+      const width = document.body.clientWidth
+      const isMobile = width < MOBILE_MAX_WIDTH
+      const isTablet = width < TABLET_MAX_WIDTH
+
+      document.body.classList.remove('mobile');
+      document.body.classList.remove('tablet');
+
+      if (isMobile) {
+        document.body.classList.add('mobile');
+      } else if (isTablet) {
+        document.body.classList.add('tablet');
+      }
+    },
   },
 };
 </script>
