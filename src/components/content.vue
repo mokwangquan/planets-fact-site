@@ -3,12 +3,20 @@
     <el-row type="flex" justify="center" align="start">
       <el-col :span="14">
         <div class="img-wrapper">
-          <img 
+          <el-image 
             class="planet-img"
             :src="planetUrl" 
             :alt="planet.value+' image'"
+            fit="contain"
           />
         </div>
+        <el-image
+          class="planet-geology-img"
+          v-if="selectedContent === 'surfaceGeology'"
+          :src="planetGeoUrl" 
+          :alt="planet.value+' image_geology'"
+          fit="contain"
+        />
       </el-col>
       <el-col :span="8">
         <div class="content-wrapper">
@@ -49,6 +57,32 @@
         </div>
       </el-col>
     </el-row>
+    <el-row class="numeric-facts-row" type="flex" justify="center" align="start">
+      <el-col>
+        <div class="fact-box">
+          <div class="title">ROTATION TIME</div>
+          <h2 class="answer">{{ planet.rotationTime }}</h2>
+        </div>
+      </el-col>
+      <el-col>
+        <div class="fact-box">
+          <div class="title">REVOLUTION TIME</div>
+          <h2 class="answer">{{ planet.revolutionTime }}</h2>
+        </div>
+      </el-col>
+      <el-col>
+        <div class="fact-box">
+          <div class="title">RADIUS</div>
+          <h2 class="answer">{{ planet.radius }}</h2>
+        </div>
+      </el-col>
+      <el-col>
+        <div class="fact-box">
+          <div class="title">AVERAGE TEMP.</div>
+          <h2 class="answer">{{ planet.temp }}</h2>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -70,11 +104,22 @@ export default {
       return PLANETS.find(el => el.value == this.selectedItem)
     },
     planetUrl() {
-      return require(`@/assets/svgs/planet-${this.planet.value}.svg`)
+      let additional = ""
+      if (this.selectedContent == "internalStructure") additional = "-internal"
+      
+      return require(`@/assets/svgs/planet-${this.planet.value}${additional}.svg`)
+    },
+    planetGeoUrl() {
+      return require(`@/assets/pngs/geology-${this.planet.value}.png`)
     },
     content() {
       return this.planet[this.selectedContent]
     },
+  },
+  watch: {
+    selectedItem() {
+      this.selectedContent = 'overview'
+    }
   }
 }
 </script>
@@ -91,14 +136,20 @@ export default {
     margin-right: 15rem;
   }
   .img-wrapper {
-    margin-top: 10%;
     height: 100%;
-    >img {
-      display: block;
-      margin: auto;
-    }
+    max-height: 35rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .planet-geology-img {
+    position: absolute;
+    top: 363px;
+    left: 462px;
+    height: 160px;
   }
   a {
+    color: #838391;
     font-weight: bold;
     text-decoration: underline;
     .go-to-icon {
@@ -141,6 +192,16 @@ export default {
     }
   }
 
-  
+  .numeric-facts-row {
+    margin: 2rem 10rem;
+    .fact-box {
+      padding: 1rem;
+      margin: auto 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      .title {
+        color: #838391;
+      }
+    }
+  }
 }
 </style>
