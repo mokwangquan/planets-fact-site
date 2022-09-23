@@ -1,13 +1,25 @@
 <template>
   <div id="content">
+
+    <el-tabs v-if="isMobile" v-model="selectedContent" stretch>
+      <el-tab-pane label="OVERVIEW" name="overview">
+        <div class="underline" :style="`background-color: ${planet.color}`">&nbsp;</div>
+      </el-tab-pane>
+      <el-tab-pane label="STRUCTURE" name="internalStructure">
+        <div class="underline" :style="`background-color: ${planet.color}; transform: translate(33vw, 0)`">&nbsp;</div>
+      </el-tab-pane>
+      <el-tab-pane label="SURFACE" name="surfaceGeology">
+        <div class="underline" :style="`background-color: ${planet.color}; transform: translate(66vw, 0)`">&nbsp;</div>
+      </el-tab-pane>
+    </el-tabs>
+
     <el-row :type="isTablet || isMobile ? '' : 'flex'" justify="center" align="start">
-      <el-col :span="isTablet || isMobile ? 24 : 14">
+      <el-col class="img-col" :span="isTablet || isMobile ? 24 : 14">
         <div class="img-wrapper">
-          <el-image 
+          <img 
             class="planet-img"
             :src="planetUrl" 
             :alt="planet.value+' image'"
-            fit="contain"
           />
           <el-image
             class="planet-geology-img"
@@ -20,8 +32,8 @@
       </el-col>
       <el-col :span="isTablet || isMobile ? 24 : 8">
         <el-row class="content-wrapper" :type="isTablet || isMobile ? 'flex' : ''" justify="space-between" align="middle">
-          <el-col :span="isTablet || isMobile ? 12 : 24">
-            <h1>{{ planet.label }}</h1>
+          <el-col :span="isTablet && !isMobile ? 12 : 24">
+            <component :is="isMobile ? 'h2' : 'h1'">{{ planet.label }}</component>
             <br/>
             <p>{{ content }}</p>
             <div class="source">
@@ -33,7 +45,7 @@
           </el-col>
           
 
-          <el-col class="button-wrapper" :span="isTablet || isMobile ? 10 : 24">
+          <el-col v-if="!isMobile" class="button-wrapper" :span="isTablet ? 10 : 24">
             <el-button 
               :style="`background-color: ${ selectedContent === 'overview' ? planet.color : '' }`"
               @click="selectedContent = 'overview'"
@@ -59,7 +71,7 @@
         </el-row>
       </el-col>
     </el-row>
-    <el-row class="numeric-facts-row" type="flex" justify="center" align="start">
+    <el-row class="numeric-facts-row" :type="isMobile ? '' : 'flex'" justify="center" align="start">
       <el-col>
         <div class="fact-box">
           <div class="title">ROTATION TIME</div>
@@ -132,21 +144,25 @@ export default {
 
 <style lang="scss">
 #content {
+  padding-bottom: 1rem;
   >.el-row {
     margin-top: 5rem;
+    margin-bottom: 3rem;
     height: fit-content;
   }
   .content-wrapper {
     margin-right: 10vw;
   }
-  .img-wrapper,
-  .planet-img {
+  .img-wrapper {
     height: 100%;
-    max-height: 38rem;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    text-align: center;
+  }
+  .planet-img {
+    max-height: 33rem;
   }
   .planet-geology-img {
     position: absolute;
@@ -213,16 +229,16 @@ export default {
 
 .tablet #content,
 .mobile #content {
+  >.el-row {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
   .content-wrapper {
-    margin: auto 2rem;
+    margin: 0 2rem;
   }
   .img-wrapper {
     height: 25rem;
-    margin-bottom: 4rem;
-    img {
-      width: 100%;
-      max-height: 15rem;
-    }
+    margin-bottom: 0;
   }
   .numeric-facts-row {
     margin: 1rem;
@@ -235,6 +251,79 @@ export default {
       line-height: 26px;
       letter-spacing: 0px;
     }
+  }
+}
+
+.mobile #content {
+  .el-tabs {
+    z-index: 1;
+    position: sticky;
+    top: 5rem;
+    padding-top: 1rem;
+    background-color: #070724;
+
+    .el-tabs__header {
+      margin: 0;
+    }
+    .el-tabs__nav.is-top {
+      .el-tabs__item {
+        padding: 0 20px;
+        font-family: "SpartanRegular";
+        font-size: 14px;
+        line-height: 35px;
+        color: #FFFFFF;
+        font-weight: bold;
+      }
+    }
+
+    .el-tabs__active-bar,
+    .el-tabs__nav-wrap::after {
+      display: none; // i do it myself
+    }
+    .underline {
+      width: calc(33.33% - 40px);
+      height: 2px;
+      margin: 0 20px;
+    }
+  }
+  .img-col {
+    height: 23rem;
+  }
+  .planet-img {
+    transform-origin: 50% 40%;
+    -moz-transform:scale(0.6);
+    -webkit-transform:scale(0.6);
+    transform:scale(0.6);
+  }
+  .content-wrapper {
+    >div {
+      transform-origin: 50% 0%;
+      text-align: center;
+      -moz-transform: scale(0.9);
+      -webkit-transform: scale(0.9);
+      transform: scale(0.9);
+      .source {
+        margin-top: 1rem;
+        margin-bottom: 0rem;
+      }
+    }
+  }
+  .fact-box {
+    margin-bottom: 0.5rem;
+    padding: 0.75rem;
+    transform-origin: 50% 0%;
+    -moz-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    .title {
+      display: inline;
+    }
+    .answer {
+      float: right;
+    }
+  }
+  .planet-geology-img {
+    transform: rotate(-90deg) translate(100%, 50%);
   }
 }
 </style>

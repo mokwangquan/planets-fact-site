@@ -92,6 +92,7 @@ export default {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   background-color: #070724;
   background-image: url('../assets/svgs/background-stars.svg');
+  height: 5rem;
   >div {
     padding: 1rem 2rem;
   }
@@ -105,8 +106,6 @@ export default {
       .selected-line {
         position: relative;
         top: -16px;
-        // TODO: improve ui dont jump
-        // border-top: 2px solid transparent !important; // hide
       }
       .label {
         position: relative;
@@ -156,7 +155,7 @@ export default {
 .el-dialog__wrapper {
   padding: 0;
   top: auto !important;
-  height: 91%;
+  height: calc(92vh + 4px);
   width: 100vw;
   .el-dialog {
     background-color: #070724;
