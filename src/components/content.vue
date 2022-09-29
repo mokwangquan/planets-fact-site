@@ -1,103 +1,105 @@
 <template>
-  <div id="content">
+  <Transition name="slide-left-right">
+    <div id="content" :key="componentKey">
+      <el-tabs v-if="isMobile" v-model="selectedContent" stretch>
+        <el-tab-pane label="OVERVIEW" name="overview">
+          <div class="underline" :style="`background-color: ${planet.color}`">&nbsp;</div>
+        </el-tab-pane>
+        <el-tab-pane label="STRUCTURE" name="internalStructure">
+          <div class="underline" :style="`background-color: ${planet.color}; transform: translate(33vw, 0)`">&nbsp;</div>
+        </el-tab-pane>
+        <el-tab-pane label="SURFACE" name="surfaceGeology">
+          <div class="underline" :style="`background-color: ${planet.color}; transform: translate(66vw, 0)`">&nbsp;</div>
+        </el-tab-pane>
+      </el-tabs>
 
-    <el-tabs v-if="isMobile" v-model="selectedContent" stretch>
-      <el-tab-pane label="OVERVIEW" name="overview">
-        <div class="underline" :style="`background-color: ${planet.color}`">&nbsp;</div>
-      </el-tab-pane>
-      <el-tab-pane label="STRUCTURE" name="internalStructure">
-        <div class="underline" :style="`background-color: ${planet.color}; transform: translate(33vw, 0)`">&nbsp;</div>
-      </el-tab-pane>
-      <el-tab-pane label="SURFACE" name="surfaceGeology">
-        <div class="underline" :style="`background-color: ${planet.color}; transform: translate(66vw, 0)`">&nbsp;</div>
-      </el-tab-pane>
-    </el-tabs>
-
-    <el-row :type="isTablet || isMobile ? '' : 'flex'" justify="center" align="start">
-      <el-col class="img-col" :span="isTablet || isMobile ? 24 : 14">
-        <div class="img-wrapper">
-          <img 
-            class="planet-img"
-            :src="planetUrl" 
-            :alt="planet.value+' image'"
-          />
-          <el-image
-            class="planet-geology-img"
-            v-if="selectedContent === 'surfaceGeology'"
-            :src="planetGeoUrl" 
-            :alt="planet.value+' image_geology'"
-            fit="contain"
-          />
-        </div>
-      </el-col>
-      <el-col :span="isTablet || isMobile ? 24 : 8">
-        <el-row class="content-wrapper" :type="isTablet || isMobile ? 'flex' : ''" justify="space-between" align="middle">
-          <el-col :span="isTablet && !isMobile ? 12 : 24">
-            <component :is="isMobile ? 'h2' : 'h1'">{{ planet.label }}</component>
-            <br/>
-            <p>{{ content }}</p>
-            <div class="source">
-              Source : 
-              <a :href="planet.sourceUrl" target="_blank">
-                {{ planet.source }}<i class="go-to-icon"/>
-              </a>
+      <el-row :type="isTablet || isMobile ? '' : 'flex'" justify="center" align="start">
+        <el-col class="img-col" :span="isTablet || isMobile ? 24 : 14">
+            <div class="img-wrapper">
+              <img 
+                class="planet-img"
+                :src="planetUrl" 
+                :alt="planet.value+' image'"
+              />
+              <el-image
+                class="planet-geology-img"
+                v-if="selectedContent === 'surfaceGeology'"
+                :src="planetGeoUrl" 
+                :alt="planet.value+' image_geology'"
+                fit="contain"
+              />
             </div>
-          </el-col>
-          
+        </el-col>
+        <el-col :span="isTablet || isMobile ? 24 : 8">
+          <el-row class="content-wrapper" :type="isTablet || isMobile ? 'flex' : ''" justify="space-between" align="middle">
+            <el-col :span="isTablet && !isMobile ? 12 : 24">
+              <component :is="isMobile ? 'h2' : 'h1'">{{ planet.label }}</component>
+              <br/>
+              <p>{{ content }}</p>
+              <div class="source">
+                Source : 
+                <a :href="planet.sourceUrl" target="_blank">
+                  {{ planet.source }}<i class="go-to-icon"/>
+                </a>
+              </div>
+            </el-col>
+            
 
-          <el-col v-if="!isMobile" class="button-wrapper" :span="isTablet ? 10 : 24">
-            <el-button 
-              :style="`background-color: ${ selectedContent === 'overview' ? planet.color : '' }`"
-              @click="selectedContent = 'overview'"
-            >
-              <span class="number">01</span> <h4>OVERVIEW</h4>
-            </el-button>
+            <el-col v-if="!isMobile" class="button-wrapper" :span="isTablet ? 10 : 24">
+              <el-button 
+                :style="`background-color: ${ selectedContent === 'overview' ? planet.color : '' }`"
+                @click="selectedContent = 'overview'"
+              >
+                <span class="number">01</span> <h4>OVERVIEW</h4>
+              </el-button>
 
-            <el-button 
-              :style="`background-color: ${ selectedContent === 'internalStructure' ? planet.color : '' }`"
-              @click="selectedContent = 'internalStructure'"
-            >
-              <span class="number">02</span> <h4>INTERNAL STRUCTURE</h4>
-            </el-button>
+              <el-button 
+                :style="`background-color: ${ selectedContent === 'internalStructure' ? planet.color : '' }`"
+                @click="selectedContent = 'internalStructure'"
+              >
+                <span class="number">02</span> <h4>INTERNAL STRUCTURE</h4>
+              </el-button>
 
-            <el-button 
-              :style="`background-color: ${ selectedContent === 'surfaceGeology' ? planet.color : '' }`"
-              @click="selectedContent = 'surfaceGeology'"
-            >
-              <span class="number">03</span> <h4>SURFACE GEOLOGY</h4>
-            </el-button>
-          </el-col>
-          
-        </el-row>
-      </el-col>
-    </el-row>
-    <el-row class="numeric-facts-row" :type="isMobile ? '' : 'flex'" justify="center" align="start">
-      <el-col>
-        <div class="fact-box">
-          <div class="title">ROTATION TIME</div>
-          <h2 class="answer">{{ planet.rotationTime }}</h2>
-        </div>
-      </el-col>
-      <el-col>
-        <div class="fact-box">
-          <div class="title">REVOLUTION TIME</div>
-          <h2 class="answer">{{ planet.revolutionTime }}</h2>
-        </div>
-      </el-col>
-      <el-col>
-        <div class="fact-box">
-          <div class="title">RADIUS</div>
-          <h2 class="answer">{{ planet.radius }}</h2>
-        </div>
-      </el-col>
-      <el-col>
-        <div class="fact-box">
-          <div class="title">AVERAGE TEMP.</div>
-          <h2 class="answer">{{ planet.temp }}</h2>
-        </div>
-      </el-col>
-    </el-row>
-  </div>
+              <el-button 
+                :style="`background-color: ${ selectedContent === 'surfaceGeology' ? planet.color : '' }`"
+                @click="selectedContent = 'surfaceGeology'"
+              >
+                <span class="number">03</span> <h4>SURFACE GEOLOGY</h4>
+              </el-button>
+            </el-col>
+            
+          </el-row>
+        </el-col>
+      </el-row>
+      <el-row class="numeric-facts-row" :type="isMobile ? '' : 'flex'" justify="center" align="start">
+        <el-col>
+          <div class="fact-box">
+            <div class="title">ROTATION TIME</div>
+            <h2 class="answer">{{ planet.rotationTime }}</h2>
+          </div>
+        </el-col>
+        <el-col>
+          <div class="fact-box">
+            <div class="title">REVOLUTION TIME</div>
+            <h2 class="answer">{{ planet.revolutionTime }}</h2>
+          </div>
+        </el-col>
+        <el-col>
+          <div class="fact-box">
+            <div class="title">RADIUS</div>
+            <h2 class="answer">{{ planet.radius }}</h2>
+          </div>
+        </el-col>
+        <el-col>
+          <div class="fact-box">
+            <div class="title">AVERAGE TEMP.</div>
+            <h2 class="answer">{{ planet.temp }}</h2>
+          </div>
+        </el-col>
+      </el-row>
+
+    </div>
+  </Transition>
 </template>
 
 <script>
@@ -113,6 +115,7 @@ export default {
   data() {
     return {
       selectedContent: 'overview',
+      componentKey: 0,
     }
   },
   computed: {
@@ -135,6 +138,7 @@ export default {
   watch: {
     selectedItem() {
       this.selectedContent = 'overview'
+      this.componentKey++
     }
   }
 }
@@ -326,4 +330,24 @@ export default {
     transform: rotate(-90deg) translate(100%, 50%);
   }
 }
+
+// transition
+.slide-left-right-leave-active,
+.slide-left-right-enter-active {
+  transition: 0.5s ease, opacity 0.2s ease;
+}
+.slide-left-right-enter {
+  opacity: 0;
+  transform: translate(100%, 0);
+}
+.slide-left-right-leave-to {
+  opacity: 0;
+  transform: translate(-100%, 0);
+}
+
+.slide-left-right-enter-to,
+.slide-left-right-leave-to {
+  position: absolute;
+}
+
 </style>
