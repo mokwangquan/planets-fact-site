@@ -2,19 +2,19 @@
   font-family: "Antonio";
   unicode-range: U+000-5FF;
   src: local("Antonio"),
-    url("/fonts/Antonio-VariableFont.ttf") format("truetype")
+    url("./assets/fonts/Antonio-VariableFont.ttf") format("truetype")
 }
 @font-face {
   font-family: "SpartanBold";
   unicode-range: U+000-5FF;
   src: local("SpartanBold"),
-    url("/fonts/Spartan-Bold.ttf") format("truetype")
+    url("./assets/fonts/Spartan-Bold.ttf") format("truetype")
 }
 @font-face {
   font-family: "SpartanRegular";
   unicode-range: U+000-5FF;
   src: local("SpartanRegular"),
-    url("/fonts/Spartan-Regular.ttf") format("truetype")
+    url("./assets/fonts/Spartan-Regular.ttf") format("truetype")
 }
 
 
