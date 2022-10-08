@@ -163,6 +163,11 @@ export default {
     }
     .content-wrapper {
       margin-right: 10vw;
+      height: 35rem;
+      >.el-col:last-child {
+        position: absolute;
+        bottom: 0;
+      }
     }
     .img-wrapper {
       height: 100%;
@@ -252,6 +257,10 @@ export default {
   }
   .content-wrapper {
     margin: 0 2rem;
+    height: auto;
+    >.el-col:last-child {
+      position: relative;
+    }
   }
   .img-wrapper {
     height: 25rem;
