@@ -1,7 +1,7 @@
 <template>
-  <div id="component-wrapper">
-    <Transition name="slide-left-right">
-    <div id="content" :key="componentKey">
+  <Transition name="slide-left-right">
+  <div id="component-wrapper" :key="componentKey">
+    <div id="content">
       <el-tabs v-if="isMobile" v-model="selectedContent" stretch>
         <el-tab-pane label="OVERVIEW" name="overview">
           <div class="underline" :style="`background-color: ${planet.color}`">&nbsp;</div>
@@ -100,8 +100,8 @@
       </el-row>
 
     </div>
-    </Transition>
   </div>
+  </Transition>
 </template>
 
 <script>
@@ -154,6 +154,9 @@ export default {
   justify-content: center;
   align-items: center;
   height: calc(100% - 80px);
+  width: 100vw;
+  position: absolute;
+  top: 80px; // header
   #content {
     height: fit-content;
     >.el-row {
@@ -251,6 +254,7 @@ export default {
 
 .tablet #component-wrapper #content,
 .mobile #component-wrapper #content {
+  margin-top: 60px;
   >.el-row {
     margin-top: 0;
     margin-bottom: 0;
@@ -265,6 +269,12 @@ export default {
   .img-wrapper {
     height: 25rem;
     margin-bottom: 0;
+  }
+  .planet-img {
+    transform-origin: 50% 40%;
+    -moz-transform:scale(0.7);
+    -webkit-transform:scale(0.7);
+    transform:scale(0.7);
   }
   .numeric-facts-row {
     margin: 1rem;
@@ -281,6 +291,7 @@ export default {
 }
 
 .mobile #component-wrapper #content {
+  margin-top: 0px;
   .el-tabs {
     z-index: 1;
     position: sticky;
