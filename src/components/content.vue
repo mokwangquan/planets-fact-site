@@ -1,5 +1,6 @@
 <template>
-  <Transition name="slide-left-right">
+  <div id="component-wrapper">
+    <Transition name="slide-left-right">
     <div id="content" :key="componentKey">
       <el-tabs v-if="isMobile" v-model="selectedContent" stretch>
         <el-tab-pane label="OVERVIEW" name="overview">
@@ -99,7 +100,8 @@
       </el-row>
 
     </div>
-  </Transition>
+    </Transition>
+  </div>
 </template>
 
 <script>
@@ -147,92 +149,103 @@ export default {
 
 
 <style lang="scss">
-#content {
-  padding-bottom: 1rem;
-  >.el-row {
-    margin-top: 5rem;
-    margin-bottom: 3rem;
+#component-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 80px);
+  #content {
     height: fit-content;
-  }
-  .content-wrapper {
-    margin-right: 10vw;
-  }
-  .img-wrapper {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    text-align: center;
-  }
-  .planet-img {
-    max-height: 33rem;
-  }
-  .planet-geology-img {
-    position: absolute;
-    top: 65%;
-    left: calc(50% - 65px);
-    width: 130px;
-  }
-  a {
-    color: #838391;
-    font-weight: bold;
-    text-decoration: underline;
-    .go-to-icon {
-      height: 15px;
-      width: 15px;
-      background-size: 15px 15px;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: inline-block;
-      background-image: url('../assets/svgs/icon-source.svg');
+    >.el-row {
+      margin-top: 5rem;
+      margin-bottom: 3rem;
+      height: fit-content;
+    }
+    .content-wrapper {
+      margin-right: 10vw;
+    }
+    .img-wrapper {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: relative;
-      bottom: -3px;
-      left: 5px;
+      text-align: center;
     }
-  }
-  .source {
-    margin: 2rem 0
-  }
-  .button-wrapper {
-    .el-button {
-      width: 100%;
-      padding: 0.5rem;
-      color: #FFFFFF;
-      border-radius: 0;
-      margin: 0.5rem 0;
-      background-color: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: start;
-      * {
-        display: inline;
-      }
-      .number {
-        float: left;
-        margin: auto 20px;
-        padding: 5px;
-      }
-      &:hover {
-        background-color: #38384F;
+    .planet-img {
+      max-height: 33rem;
+    }
+    .planet-geology-img {
+      position: absolute;
+      top: 65%;
+      left: calc(50% - 65px);
+      width: 130px;
+    }
+    a {
+      color: #838391;
+      font-weight: bold;
+      text-decoration: underline;
+      .go-to-icon {
+        height: 15px;
+        width: 15px;
+        background-size: 15px 15px;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: inline-block;
+        background-image: url('../assets/svgs/icon-source.svg');
+        position: relative;
+        bottom: -3px;
+        left: 5px;
       }
     }
-  }
+    .source {
+      margin: 2rem 0
+    }
+    .button-wrapper {
+      .el-button {
+        width: 100%;
+        padding: 0.5rem;
+        color: #FFFFFF;
+        border-radius: 0;
+        margin: 0.5rem 0;
+        background-color: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: start;
+        * {
+          display: inline;
+        }
+        .number {
+          float: left;
+          margin: auto 20px;
+          padding: 5px;
+        }
+        &:hover {
+          background-color: #38384F;
+        }
+      }
+    }
 
-  .numeric-facts-row {
-    margin: 2rem 10rem;
-    .fact-box {
-      padding: 1rem;
-      margin: auto 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      .title {
-        color: #838391;
+    .numeric-facts-row {
+      margin: 2rem 10rem;
+      .fact-box {
+        padding: 1rem;
+        margin: auto 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        .title {
+          color: #838391;
+        }
       }
     }
   }
 }
 
-.tablet #content,
-.mobile #content {
+.mobile #component-wrapper,
+.tablet #component-wrapper {
+  display: block;
+}
+
+.tablet #component-wrapper #content,
+.mobile #component-wrapper #content {
   >.el-row {
     margin-top: 0;
     margin-bottom: 0;
@@ -258,7 +271,7 @@ export default {
   }
 }
 
-.mobile #content {
+.mobile #component-wrapper #content {
   .el-tabs {
     z-index: 1;
     position: sticky;

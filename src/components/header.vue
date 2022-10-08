@@ -155,7 +155,7 @@ export default {
 .el-dialog__wrapper {
   padding: 0;
   top: auto !important;
-  height: calc(92vh + 4px);
+  height: calc(100% - 80px);
   width: 100vw;
   .el-dialog {
     background-color: #070724;

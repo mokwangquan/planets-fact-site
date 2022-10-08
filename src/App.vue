@@ -19,7 +19,6 @@
 import Header from "@/components/header.vue"
 import Content from "@/components/content.vue"
 import debounce from "lodash/debounce"
-// import { PLANETS } from "@/constants/index.js"
 
 const TABLET_MAX_WIDTH = 1200
 const MOBILE_MAX_WIDTH = 500
